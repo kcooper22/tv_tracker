@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/kcooper22/tv_tracker/issues"
   },
-  "homepage": "https://github.com/kcooper22/tv_tracker#readme"
+  "homepage": "https://github.com/kcooper22/tv_tracker#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.0",
+    "express": "^4.13.3",
+    "md5": "^2.0.0",
+    "mongoose": "^4.3.0",
+    "morgan": "^1.6.1"
+  }
 }
