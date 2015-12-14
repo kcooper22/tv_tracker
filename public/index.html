@@ -1,131 +1,126 @@
-<html>
+<html ng-app="TvTracker">
 <head>
 	<title>TV Tracker</title>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.4.2/Sortable.min.js"></script>
+  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.0.4/js.cookie.js"></script>
+  	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.0.1/css/foundation.min.css">
+  	 <link rel="stylesheet" type="text/css" href="styles.css">
+  		
 </head>
 <body>
-	<script>
-	  window.fbAsyncInit = function() {
-	    FB.init({
-	      appId      : '882527225176404',
-	      xfbml      : true,
-	      version    : 'v2.5'
-	    });
-	  };
 
-	  (function(d, s, id){
-	     var js, fjs = d.getElementsByTagName(s)[0];
-	     if (d.getElementById(id)) {return;}
-	     js = d.createElement(s); js.id = id;
-	     js.src = "//connect.facebook.net/en_US/sdk.js";
-	     fjs.parentNode.insertBefore(js, fjs);
-	   }(document, 'script', 'facebook-jssdk'));
-	</script>
+	<div id = "landing">
+
+        <a href="/" id = "logo">TV Tracker</a>
+        <!-- div for all the links -->
+            <header id = "header"></header>
+
+        </div>
+
+	<!--  CONTAINER TO ATTACHED TEMPLATES TO -->
+	<div id = "container"></div>
+
+	<div id = "show-display-container"></div>
+
+	<!-- LOG IN SCREEN TEMPLATE -->
+    <template id='log-in-screen'>
+
+        <div class='form-container'>
+
+            <div class="form small-10 medium-5 large-3">
+
+                <div>
+                    <input type="text" id="email-field" placeholder="Email">
+                </div>
+                <div>
+                    <input type="password" id="password-field" placeholder="Password">
+                </div>
+                <button id="signin-submit">Sign In</button>
+
+            </div>
+
+        </div>
+
+    </template>
 
 
-	<script>
-  // This is called with the results from from FB.getLoginStatus().
-  function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
-    if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      testAPI();
-    } else if (response.status === 'not_authorized') {
-      // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
-    }
-  }
+    <!-- Sign Up Template -->
+    <template id='sign-up-screen'>
 
-  // This function is called when someone finishes with the Login
-  // Button.  See the onlogin handler attached to it in the sample
-  // code below.
-  function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
-  }
+        <div class='form-container'>
 
-  window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '{882527225176404}',
-    cookie     : true,  // enable cookies to allow the server to access 
-                        // the session
-    xfbml      : true,  // parse social plugins on this page
-    version    : 'v2.2' // use version 2.2
-  });
+            <div class="form small-10 medium-5 large-3">
 
-  // Now that we've initialized the JavaScript SDK, we call 
-  // FB.getLoginStatus().  This function gets the state of the
-  // person visiting this page and can return one of three states to
-  // the callback you provide.  They can be:
-  //
-  // 1. Logged into your app ('connected')
-  // 2. Logged into Facebook, but not your app ('not_authorized')
-  // 3. Not logged into Facebook and can't tell if they are logged into
-  //    your app or not.
-  //
-  // These three cases are handled in the callback function.
+                <div>
+                    <input type="text" id="email-field" placeholder="Email">
+                </div>
+                 <div>
+                    <input type="text" id="username-field" placeholder="Name">
+                </div>
 
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
+                <div>
+                    <input type="password" id="password-field" placeholder="Password">
+                </div>
+                <div>
+                    <input type="password" id="password-confirm-field" placeholder="Confirm Password">
+                    </div>
 
-  };
+                <button id="signup-submit">Sign Up</button>
 
-  // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+            </div>
 
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-    });
-  }
-</script>
+        </div>
 
-<!--
-  Below we include the Login Button social plugin. This button uses
-  the JavaScript SDK to present a graphical Login button that triggers
-  the FB.login() function when clicked.
--->
-
-<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-
-<div id="status">
-</div>
+    </template>
 
 
 
-	<div class="fb-login-button" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div>
-	
+    
+    <template id='main-screen'>
 
-	<div
-	  class="fb-like"
-	  data-share="true"
-	  data-width="450"
-	  data-show-faces="true">
-	</div>
+    	<div style="width: 15%; margin: 0 auto; text-align: center;">
+            Sort By:<br>
+                <select id="filter">
+                    <option value="watching" selected>Currently Watching</option>
+                    <option value="bailed">Bailed</option>
+                    <option value="finished">Finished</option>
+                    <option value="want">Want To Watch</option>
+                </select>
+        </div>
 
+    	<!-- New Show Fields -->
+        <div class="form small-10 medium-5 large-3">
+            <h2 id = "new-order">Add A New Show</h2>
+            <div>
+                <input type="text" id="show-name" placeholder="Show Name">
+            </div>
+
+            <button id="new-show-submit">Search for Show</button>
+
+        </div>
+
+    </template>
+
+
+<!-- Template for displaying shows depending on filter -->
+    <template id="display-shows">
+
+    	<div id="show-container">
+
+        	{{#each this}}
+        		<p>{{show_name}}</p>
+        		<p>{{description}}</p>
+        		<p id="season_ep">Season: {{season}}, Episode: {{episode}}</p>
+        		<img src="{{img_URL}}">
+
+        	{{/each}}
+        </div>	
+    </template>
+
+
+<script src="app.js"></script>
 </body>
 </html>
