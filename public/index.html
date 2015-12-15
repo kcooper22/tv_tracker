@@ -111,10 +111,26 @@
     	<div id="show-container">
 
         	{{#each this}}
-        		<p>{{show_name}}</p>
+        	<div id="show-info" data-id="{{_id}}">
+        		<h3>{{show_name}}</h3>
         		<p>{{description}}</p>
-        		<p id="season_ep">Season: {{season}}, Episode: {{episode}}</p>
+        		<div class="inline season_ep"> Season & Episode:
+        			<div class="inline" id="sea_ep_nums">{{season}}.{{episode}}</div>
+        			<div class="inline" id="update_fields">
+        				<input id ='update_season' class="input_field" value='{{season}}'>.
+        				<input id ='update_episode' class="input_field" value='{{episode}}'>
+        				<button id='sea_ep_submit'>Submit</>
+        			</div>
+        		</div><br>
         		<img src="{{img_URL}}">
+        		<button class='delete-button'>DELETE</button>
+        		<select class="move_list">
+                    <option class="option" value="watching">Currently Watching</option>
+                    <option class="option" value="bailed">Bailed</option>
+                    <option class="option" value="finished">Finished</option>
+                    <option class="option" value="want">Want To Watch</option>
+                </select>
+        	</div>
 
         	{{/each}}
         </div>	

@@ -215,7 +215,9 @@ var invokeSignOut = function(data){
 
 
 var renderShows = function(data){
-    
+
+
+    // APPEND HEADER FILTER AND SEACH TO MAIN SCREEN
     var $container = $('#container');
 
     $container.empty();
@@ -225,7 +227,9 @@ var renderShows = function(data){
     $container.append(template());
 
     var $filter = $('#filter');
-    
+
+
+    // DISPLAY SHOWS
     renderList = $filter.val();
 
     var showsRenderList = [];
@@ -245,9 +249,36 @@ var renderShows = function(data){
 
     $showContainer.append(templateTwo(showsRenderList));
 
+    // UPDATE SEASON EP LOGIC
+    var seasonEp = $('.season_ep');
+
+    for(var i=0;i< seasonEp.length; i++){
+
+        $(seasonEp[i]).children('#update_fields').hide();
+
+        $(seasonEp[i]).dblclick(function(){
+
+            $(this).children('#sea_ep_nums').hide();
+            $(this).children('#update_fields').show();
+
+            $(this).children('#update_fields').children('#sea_ep_submit').click(function(){
+
+                var seasonVal = $(this).parent().children("#update_season").val(); 
+                var episodeVal = $(this).parent().children("#update_episode").val();
+                var showId = $(this).parent().parent().parent().attr('data-id');
+
+                updateSeasonEp(seasonVal, episodeVal, showId);
+
+                // $(this).parent().parent().children('#sea_ep_nums').show();
+                // $(this).parent('#update_fields').hide();
+            })
+        })
+    }
+
+    // ADD FUNCTIONALITY TO BUTTONS
     newShowButton();
 
-    
+    deleteShow();
 
     $filter.change(function () {
 
@@ -280,8 +311,49 @@ var displayShows = function(data, filter){
 
     $showContainer.append(template(showsRenderList));
 
-    newShowButton();
+    // UPDATE LIST LOGIC
+    // by default, select the list that it already was set to
 
+    $.each( $('.option'), function( index, option ){
+
+        console.log(option);
+
+        if (option.value == filter) {
+
+            $(option).attr('selected', 'selected');
+        }
+
+    });
+
+
+
+    // UPDATE SEASON EP LOGIC
+    var seasonEp = $('.season_ep');
+
+    for(var i=0;i< seasonEp.length; i++){
+
+        $(seasonEp[i]).children('#update_fields').hide();
+
+        $(seasonEp[i]).dblclick(function(){
+
+            $(this).children('#sea_ep_nums').hide();
+            $(this).children('#update_fields').show();
+
+            $(this).children('#update_fields').children('#sea_ep_submit').click(function(){
+
+                var seasonVal = $(this).parent().children("#update_season").val(); 
+                var episodeVal = $(this).parent().children("#update_episode").val();
+                var showId = $(this).parent().parent().parent().attr('data-id');
+
+                updateSeasonEp(seasonVal, episodeVal, showId);
+
+                $(this).parent().parent().children('#sea_ep_nums').show();
+                $(this).parent('#update_fields').hide();
+            })
+        })
+    }
+
+    deleteShow();
 }
 
 
@@ -289,12 +361,6 @@ var displayShows = function(data, filter){
 // FUNCTIONS FOR CREATING SHOWS
 // ===============================
 var newShowButton = function(){
-
-    // $('#container').empty();
-
-    // var template = Handlebars.compile($('#new-order-template').html());
-
-    // $('#container').append(template);
 
     $('#new-show-submit').click(function() {
 
@@ -305,6 +371,8 @@ var newShowButton = function(){
 var searchNewShow = function(){
 
     var t = $('#show-name').val();
+
+    $('#show-name').val('');
 
     $.ajax({
        url: 'http://www.omdbapi.com/?t='+ t +'&y=&plot=short&r=json&type=series',
@@ -331,55 +399,77 @@ var searchNewShow = function(){
                 data: newShowData
             }).done(function(data){
                 console.log(data)
-                $('#container').empty();
-                renderShows(data);
+                $('#show-display-container').empty();
+                displayShows(data, list);
             });
         }
    });
 
 }
 
-// var createNewOrder = function(){
 
-//     console.log("reached create new order")
-//     var restName = $('#rest-name').val();
-//     var details = $('#order-details').val();
-//     var cuisine = $('#cuisine-type').val();
-//     var image = $('#order-image').val();
-//     var favorite = $('#meal-favorite');
+// ===============================
+// FUNCTIONS FOR EDITING SHOWS
+// ===============================
+var updateSeasonEp = function(season, episode, showId){
+    $.ajax({
+        url: '/users/' +  Cookies.get('tvTrackerUser') + '/shows/' + showId,
+        method: 'GET',
+    }).done(function(data){
+        console.log(data)
+
+        var showData = {
+            show_name: data.show_name,
+            img_URL: data.img_URL,
+            description: data.description,
+            season: season,
+            episode: episode,
+            list: data.list
+        }
+
+        var rerenderList = data.list;
+
+        // console.log(showData)
+        $.ajax({
+           url: '/users/' +  Cookies.get('tvTrackerUser') + '/shows/' + showId,
+           method: 'PUT',
+           data: showData
+        }).done(function(data){
+            console.log(data)
+
+            displayShows(data, rerenderList);
+       });
+    })    
+};
 
 
-//     // check if the meal-favorite checkbox is checked, if it is, set favorite to true,
-//     // else, to false.
-//     if (favorite.is(":checked")) {
 
-//         favorite = true;
 
-//     } else {
+// ===============================
+// FUNCTIONS FOR DELETEING SHOWS
+// ===============================
+var deleteShow = function(){
 
-//         favorite = false;
-//     }
+    $('.delete-button').click(function(){
 
-//     // check to make sure the favorite is sending the right boolean value
-//     console.log(favorite);
+        // console.log($(this).parent().attr('data-id'))
+        // console.log($('#filter').val());
+        console.log('button clicked')
 
-//     var orderData = {
-//         restaurant_name: restName,
-//         details: details,
-//         cuisine: cuisine,
-//         img_url: image,
-//         favorite: favorite
-//     }
+        var $showId = $(this).parent().attr('data-id');
 
-//     $.ajax({
-//        url: '/users/' +  Cookies.get('tvTrackerUser') + '/orders',
-//        method: 'POST',
-//        data: orderData
-//     }).done(function(data){
-//         console.log(data)
-//         $('#container').empty();
-//         renderMeals(data);
-//    });
+        $.ajax({
 
-// }
+            url: "/users/" + Cookies.get('tvTrackerUser') + "/shows/" + $showId,
+            method: "DELETE"
 
+        }).done(function(data) {
+            console.log(data);
+            console.log("deleted");
+            displayShows(data, $('#filter').val());
+
+        });
+
+    });
+
+}
