@@ -316,14 +316,34 @@ var displayShows = function(data, filter){
 
     $.each( $('.option'), function( index, option ){
 
-        console.log(option);
-
         if (option.value == filter) {
 
             $(option).attr('selected', 'selected');
         }
-
     });
+
+
+    var changeListDrop = $('.move_list');
+    
+    for(var p=0; p<changeListDrop.length; p++){
+
+        var showId = $(changeListDrop[p]).parent().attr('data-id');
+        var origList = $(changeListDrop[p]).val();
+
+        $(changeListDrop[p]).change(function(){
+
+            var moveToList = $(this).val()
+
+            // console.log(showId)
+            // console.log(moveToList)
+            // console.log(origList)
+
+            moveList(showId, moveToList, origList);
+        })
+        
+    }
+
+
 
 
 
@@ -442,6 +462,39 @@ var updateSeasonEp = function(season, episode, showId){
     })    
 };
 
+
+
+var moveList = function(showId, moveToList, origList){
+    $.ajax({
+        url: '/users/' +  Cookies.get('tvTrackerUser') + '/shows/' + showId,
+        method: 'GET',
+    }).done(function(data){
+
+        console.log(showId)
+        console.log(moveToList)
+        console.log(origList)
+        var showData = {
+            show_name: data.show_name,
+            img_URL: data.img_URL,
+            description: data.description,
+            season: data.season,
+            episode: data.episode,
+            list: moveToList
+        }      
+
+        console.log(showData)  
+
+        $.ajax({
+           url: '/users/' +  Cookies.get('tvTrackerUser') + '/shows/' + showId,
+           method: 'PUT',
+           data: showData
+        }).done(function(data){
+            console.log(data)
+
+            displayShows(data, origList);
+       });
+    })    
+}
 
 
 
