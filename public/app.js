@@ -201,6 +201,7 @@ var invokeSignOut = function(data){
         // Also, remove the sign out link.
         $('#container').empty();
         $('#header').empty();
+        $('#show-display-container').empty();
 
         // Invoke the startApp function to go through the process of signup/sign in all over again.
         startApp(data);
@@ -249,6 +250,12 @@ var renderShows = function(data){
 
     $showContainer.append(templateTwo(showsRenderList));
 
+
+    // HIDE SEASON EPISODE DATA UNDER CERTAIN CONDITIONS
+    if($filter === 'bailed' || $filter === 'want'){
+
+    }
+
     // UPDATE SEASON EP LOGIC
     var seasonEp = $('.season_ep');
 
@@ -265,9 +272,10 @@ var renderShows = function(data){
 
                 var seasonVal = $(this).parent().children("#update_season").val(); 
                 var episodeVal = $(this).parent().children("#update_episode").val();
-                var showId = $(this).parent().parent().parent().attr('data-id');
+                var showId = $(this).parent().parent().parent().parent().parent().attr('data-id');
 
                 updateSeasonEp(seasonVal, episodeVal, showId);
+                console.log(seasonVal,episodeVal,showId)
 
                 // $(this).parent().parent().children('#sea_ep_nums').show();
                 // $(this).parent('#update_fields').hide();
@@ -275,16 +283,49 @@ var renderShows = function(data){
         })
     }
 
+
+    // UPDATE LIST LOGIC
+    var changeListDrop = $('.move_list');
+    
+    for(var p=0; p<changeListDrop.length; p++){
+
+        var origList = $(changeListDrop[p]).val();
+
+        $(changeListDrop[p]).change(function(){
+
+            var moveToList = $(this).val();
+             var showId = $(this).parent().parent().parent().attr('data-id');
+
+            // console.log(showId)
+            // console.log(moveToList)
+            // console.log(origList)
+
+            moveList(showId, moveToList, origList);
+        })
+        
+    }
+
+
     // ADD FUNCTIONALITY TO BUTTONS
     newShowButton();
 
     deleteShow();
 
+
+    // FILTER LIST CHANGE LOGIC
     $filter.change(function () {
 
         var filterData = ($filter.val())
 
-        displayShows(data, filterData);
+        $.ajax({
+            url: '/users/' +  Cookies.get('tvTrackerUser'),
+            method: 'GET',
+        }).done(function(newData){
+        
+        displayShows(newData, filterData);
+    });
+
+        
         
     });
 }
@@ -303,6 +344,8 @@ var displayShows = function(data, filter){
 
     });
 
+    console.log(showsRenderList)
+
     var $showContainer = $('#show-display-container');
 
     $showContainer.empty();
@@ -313,7 +356,6 @@ var displayShows = function(data, filter){
 
     // UPDATE LIST LOGIC
     // by default, select the list that it already was set to
-
     $.each( $('.option'), function( index, option ){
 
         if (option.value == filter) {
@@ -327,24 +369,22 @@ var displayShows = function(data, filter){
     
     for(var p=0; p<changeListDrop.length; p++){
 
-        var showId = $(changeListDrop[p]).parent().attr('data-id');
+        
         var origList = $(changeListDrop[p]).val();
 
         $(changeListDrop[p]).change(function(){
 
-            var moveToList = $(this).val()
+            var moveToList = $(this).val();
+            var showId = $(this).parent().parent().parent().attr('data-id');
 
-            // console.log(showId)
-            // console.log(moveToList)
-            // console.log(origList)
+            console.log(showId)
+            console.log(moveToList)
+            console.log(origList)
 
             moveList(showId, moveToList, origList);
         })
         
     }
-
-
-
 
 
     // UPDATE SEASON EP LOGIC
@@ -363,7 +403,7 @@ var displayShows = function(data, filter){
 
                 var seasonVal = $(this).parent().children("#update_season").val(); 
                 var episodeVal = $(this).parent().children("#update_episode").val();
-                var showId = $(this).parent().parent().parent().attr('data-id');
+                var showId = $(this).parent().parent().parent().parent().parent().attr('data-id');
 
                 updateSeasonEp(seasonVal, episodeVal, showId);
 
@@ -470,9 +510,6 @@ var moveList = function(showId, moveToList, origList){
         method: 'GET',
     }).done(function(data){
 
-        console.log(showId)
-        console.log(moveToList)
-        console.log(origList)
         var showData = {
             show_name: data.show_name,
             img_URL: data.img_URL,
@@ -482,15 +519,13 @@ var moveList = function(showId, moveToList, origList){
             list: moveToList
         }      
 
-        console.log(showData)  
-
         $.ajax({
            url: '/users/' +  Cookies.get('tvTrackerUser') + '/shows/' + showId,
            method: 'PUT',
            data: showData
         }).done(function(data){
-            console.log(data)
 
+            console.log(data)
             displayShows(data, origList);
        });
     })    
@@ -509,7 +544,7 @@ var deleteShow = function(){
         // console.log($('#filter').val());
         console.log('button clicked')
 
-        var $showId = $(this).parent().attr('data-id');
+        var $showId = $(this).parent().parent().parent().attr('data-id');
 
         $.ajax({
 

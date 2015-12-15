@@ -60,7 +60,7 @@ app.route('/users')
                 res.cookie("tvTrackerUser", newUser.id);
 
                 // Send all of the user's info except the password.
-                res.send(newUser.id, newUser.email, newUser.name, newUser.orders);
+                res.send(newUser);
 
             }
 

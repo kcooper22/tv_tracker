@@ -1,5 +1,16 @@
+@import url(https://fonts.googleapis.com/css?family=Oxygen:400,700);
+
+body{
+
+	font-family: "Oxygen";
+}
+
 #show-container{
 	/*text-align: center;*/
+}
+
+#show-info{
+	padding-top: 30px;
 }
 
 .inline{
@@ -11,6 +22,10 @@
 	text-align: center;
 }
 
-#move_list{
-	width: 15%;
+.move_list{
+	width: 30%;
 }
+
+/*.filter{
+	text-align: center;
+}*/
