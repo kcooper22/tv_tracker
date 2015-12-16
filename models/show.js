@@ -7,7 +7,8 @@ var ShowSchema = new mongoose.Schema({
 	description: String,
 	season: Number,
 	episode: Number,
-	list: String
+	list: String,
+	created_at: {type: Date, default: Date.now}
 });
 
 var Show = mongoose.model('Show', ShowSchema);
