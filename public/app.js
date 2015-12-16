@@ -433,7 +433,7 @@ var searchNewShow = function(){
     $.ajax({
        url: 'http://www.omdbapi.com/?t='+ t +'&y=&plot=short&r=json&type=series',
        method: 'GET',
-       dataType: 'JSON'
+       dataType: 'JSONP'
     }).done(function(data){
 
         if(data.Response == "False"){
