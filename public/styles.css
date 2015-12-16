@@ -12,11 +12,12 @@ body{
 }
 
 #show-info{
-	margin-top: 30px;
+	margin-top: 20px;
 	border-style: solid;
 	background-color: #BEBCD3;
 	margin-left: 5px;	
 	border-radius: 25px;
+	padding: 10px;
 }
 
 .inline{
@@ -29,11 +30,10 @@ body{
 }
 
 .move_list{
-	width: 30%;
+	width: 200px;
 }
 
 img{
-	padding-bottom: 1px;
 	padding-left: 15px;
 	padding-right: -5px;
 }
@@ -54,6 +54,10 @@ img{
 
 #show-title{
 	padding-left: 20px
+}
+
+.white-text{
+	color: white;
 }
 
 /*.filter{

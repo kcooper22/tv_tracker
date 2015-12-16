@@ -36,6 +36,8 @@ var startApp = function(data) {
         $('#header').append("<a href='#' id = 'signin'>Sign In</a>");
         $('#header').append("<a href='#' id = 'signup'>Create Account</a>");
 
+        $('body').css("background", "url('static_gif.gif')");
+
         invokeSignInForm();
         invokeSignUpForm();
     }
@@ -217,6 +219,7 @@ var invokeSignOut = function(data){
 
 var renderShows = function(data){
 
+    $('body').css("background", "");
 
     // APPEND HEADER FILTER AND SEACH TO MAIN SCREEN
     var $container = $('#container');
