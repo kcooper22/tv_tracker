@@ -439,10 +439,14 @@ var searchNewShow = function(){
         if(data.Response == "False"){
             console.log("ERROR")
         } else{
-            var list = $('#filter').val()
+            var list = $('#filter').val();
+            var updateLink = data.Poster.split('');
+            updateLink.splice(4, 0, 's');
+            updateLink = updateLink.join('');
+
             var newShowData = {
                show_name: data.Title,
-               img_URL: data.Poster,
+               img_URL: updateLink,
                description: data.Plot,
                season: 1,
                episode: 1,
