@@ -17,7 +17,7 @@ var startApp = function(data) {
         console.log("logged in user cookie present");
         $('.form').empty();
         $('#header').empty();
-        $('#header').append("<a href='#' id = 'signout'>Sign Out</a>");
+        $('#header').append("<a href='#' id='signout' class='medium-2 large-2 columns inline'>Sign Out</a>");
         invokeSignOut();
 
         $.ajax({
@@ -272,13 +272,11 @@ var renderShows = function(data){
 
                 var seasonVal = $(this).parent().children("#update_season").val(); 
                 var episodeVal = $(this).parent().children("#update_episode").val();
-                var showId = $(this).parent().parent().parent().parent().parent().attr('data-id');
+                var showId = $(this).attr('data-id');
 
                 updateSeasonEp(seasonVal, episodeVal, showId);
                 console.log(seasonVal,episodeVal,showId)
 
-                // $(this).parent().parent().children('#sea_ep_nums').show();
-                // $(this).parent('#update_fields').hide();
             })
         })
     }
@@ -294,7 +292,7 @@ var renderShows = function(data){
         $(changeListDrop[p]).change(function(){
 
             var moveToList = $(this).val();
-             var showId = $(this).parent().parent().parent().attr('data-id');
+            var showId = $(this).attr('data-id');
 
             // console.log(showId)
             // console.log(moveToList)
@@ -375,7 +373,7 @@ var displayShows = function(data, filter){
         $(changeListDrop[p]).change(function(){
 
             var moveToList = $(this).val();
-            var showId = $(this).parent().parent().parent().attr('data-id');
+            var showId = $(this).attr('data-id');
 
             console.log(showId)
             console.log(moveToList)
@@ -403,12 +401,10 @@ var displayShows = function(data, filter){
 
                 var seasonVal = $(this).parent().children("#update_season").val(); 
                 var episodeVal = $(this).parent().children("#update_episode").val();
-                var showId = $(this).parent().parent().parent().parent().parent().attr('data-id');
+                var showId = $(this).attr('data-id');
 
                 updateSeasonEp(seasonVal, episodeVal, showId);
 
-                $(this).parent().parent().children('#sea_ep_nums').show();
-                $(this).parent('#update_fields').hide();
             })
         })
     }
@@ -544,7 +540,7 @@ var deleteShow = function(){
         // console.log($('#filter').val());
         console.log('button clicked')
 
-        var $showId = $(this).parent().parent().parent().attr('data-id');
+        var $showId = $(this).attr('data-id');
 
         $.ajax({
 

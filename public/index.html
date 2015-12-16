@@ -12,11 +12,11 @@
 </head>
 <body>
 
-	<div id = "landing">
+	<div id = "landing" class='row'>
 
-        <a href="/" id = "logo">TV Tracker</a>
+        <a href="/" id="logo" class="large-10 medium-10 columns inline">TV Tracker</a>
         <!-- div for all the links -->
-            <header id = "header"></header>
+            <header id = "header" class='columns'></header>
 
         </div>
 
@@ -125,12 +125,12 @@
 		        			<div class="inline" id="update_fields">
 		        				<input id ='update_season' class="input_field" value='{{season}}'>.
 		        				<input id ='update_episode' class="input_field" value='{{episode}}'>
-		        				<button id='sea_ep_submit'>Submit</>
+		        				<button id='sea_ep_submit' data-id="{{_id}}">Submit</>
 		        			</div>
 		        		</div><br>
 		        		
-		        		<button class='delete-button'>DELETE</button>
-		        		<select class="move_list">
+		        		<button class='delete-button' data-id="{{_id}}">DELETE</button>
+		        		<select class="move_list" data-id="{{_id}}">
 		                    <option class="option" value="watching">Currently Watching</option>
 		                    <option class="option" value="bailed">Bailed</option>
 		                    <option class="option" value="finished">Finished</option>

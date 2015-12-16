@@ -26,6 +26,11 @@ body{
 	width: 30%;
 }
 
+#landing{
+	background-color: #5D5E60;
+	color: #6A9B9B;
+}
+
 /*.filter{
 	text-align: center;
 }*/
