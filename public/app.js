@@ -431,7 +431,7 @@ var searchNewShow = function(){
     $('#show-name').val('');
 
     $.ajax({
-       url: 'http://www.omdbapi.com/?t='+ t +'&y=&plot=short&r=json&type=series',
+       url: 'https://www.omdbapi.com/?t='+ t +'&y=&plot=short&r=json&type=series',
        method: 'GET',
        dataType: 'JSONP'
     }).done(function(data){
