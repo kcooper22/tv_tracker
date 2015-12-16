@@ -3,7 +3,8 @@
 body{
 
 	font-family: "Oxygen";
-	background-color: papayawhip;
+	background-color: #EAFDF8
+	
 }
 
 #show-container{
@@ -11,7 +12,11 @@ body{
 }
 
 #show-info{
-	padding-top: 30px;
+	margin-top: 30px;
+	border-style: solid;
+	background-color: #BEBCD3;
+	margin-left: 5px;	
+	border-radius: 25px;
 }
 
 .inline{
@@ -27,9 +32,28 @@ body{
 	width: 30%;
 }
 
+img{
+	padding-bottom: 1px;
+	padding-left: 15px;
+	padding-right: -5px;
+}
+
 #landing{
 	background-color: #5D5E60;
 	color: #6A9B9B;
+}
+
+.delete-button{
+	animation: background-color 0.5s ease;
+}
+
+.delete-button:hover{
+
+	color:red;
+}
+
+#show-title{
+	padding-left: 20px
 }
 
 /*.filter{

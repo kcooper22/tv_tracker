@@ -437,7 +437,12 @@ var searchNewShow = function(){
     }).done(function(data){
 
         if(data.Response == 'False'){
-            console.log("ERROR")
+            console.log("ERROR");
+
+            $('#add-response').html('Show Not Found').show();
+            setTimeout(function(){
+                $('#add-response').hide(1000)
+            }, 2000);
         }else{
             showDescrip = data;
 
@@ -466,6 +471,10 @@ var searchNewShow = function(){
                     console.log(data)
                     $('#show-display-container').empty();
                     displayShows(data, list);
+                     $('#add-response').html('Show Added!').show();
+                    setTimeout(function(){
+                        $('#add-response').hide(1000)
+                    }, 2000);
                 });
         })
       }  
