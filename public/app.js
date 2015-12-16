@@ -441,7 +441,7 @@ var searchNewShow = function(){
         } else{
             var list = $('#filter').val();
             var updateLink = data.Poster.split('');
-            updateLink.splice(4, 0, 's');
+            // updateLink.splice(4, 0, 's');
             updateLink = updateLink.join('');
 
             var newShowData = {
