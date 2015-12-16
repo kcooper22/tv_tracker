@@ -430,24 +430,29 @@ var searchNewShow = function(){
 
     $('#show-name').val('');
 
+    var showDescrip = null;
+    var showImg = null;
+    var list = $('#filter').val();
+
     $.ajax({
-       url: 'https://www.omdbapi.com/?t='+ t +'&y=&plot=short&r=json&type=series',
-       method: 'GET',
-       dataType: 'JSON'
+        url: '/tvsearch/description/' + t,
+        method: 'GET',
+        dataType: 'JSON'
     }).done(function(data){
+        showDescrip = data;
 
-        if(data.Response == "False"){
-            console.log("ERROR")
-        } else{
-            var list = $('#filter').val();
-            var updateLink = data.Poster.split('');
-            // updateLink.splice(4, 0, 's');
-            updateLink = updateLink.join('');
-
+        $.ajax({
+            url: '/tvsearch/image/' + t,
+            method: 'GET',
+            dataType: 'JSON'
+        }).done(function(data){
+            
+            showImg = "http://image.tmdb.org/t/p/w500/"+data.results[0].poster_path;
+            
             var newShowData = {
-               show_name: data.Title,
-               img_URL: updateLink,
-               description: data.Plot,
+               show_name: showDescrip.Title,
+               img_URL: showImg,
+               description: showDescrip.Plot,
                season: 1,
                episode: 1,
                list: list
@@ -462,9 +467,10 @@ var searchNewShow = function(){
                 $('#show-display-container').empty();
                 displayShows(data, list);
             });
-        }
-   });
 
+        })
+        
+    })
 }
 
 

@@ -4,7 +4,9 @@ var express      = require('express'),
     mongoose     = require('mongoose'),
     bodyParser   = require('body-parser'),
     md5          = require('md5'),
-    cookieParser = require('cookie-parser');
+    cookieParser = require('cookie-parser'),
+    request 	 = require('request'),
+    MovieDB 	 = require('moviedb')('3086570f7ccac0cac7d26ede037b7cce');
 
 var port         = process.env.PORT || 3000;
 var app          = express();
@@ -154,10 +156,9 @@ app.get('/users/:id/shows/:show_id', function(req, res) {
             }
 
         });
-
 });
 
-// This route is for editing an order.
+// This route is for editing a show.
 app.put('/users/:id/shows/:show_id', function(req, res) {
 
         Show.findByIdAndUpdate(req.params.show_id, req.body, function(err, show) {
@@ -244,4 +245,21 @@ app.delete('/users/:id/shows/:show_id', function(req, res) {
 
     });
 
+});
+
+
+
+// Route for request data from external sources
+app.get('/tvsearch/description/:search_data', function(req,res){
+  // req.query are the longitude and latitude params for the get request
+  request('https://www.omdbapi.com/?t='+ req.params.search_data +'&y=&plot=short&r=json&type=series',function(error, response, body) {
+  	res.send(body)
+  });
+});
+
+app.get('/tvsearch/image/:search_data', function(req,res){
+  // req.query are the longitude and latitude params for the get request
+  request('http://api.themoviedb.org/3/search/tv?api_key=3086570f7ccac0cac7d26ede037b7cce&query='+req.params.search_data,function(error, response, body) {
+  	res.send(body)
+  });
 });
