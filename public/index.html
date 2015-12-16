@@ -114,13 +114,13 @@
         	<div id="show-info" data-id="{{_id}}">
         		<h3>{{show_name}}</h3>
         		<div class='row'>
-	        		<div class="small-12 medium-3 large-4 columns">
+	        		<div class="small-12 medium-3 large-3 columns">
 	        			<img src="{{img_URL}}">
 	        		</div>
 
-		        	<div class="medium-9 large-8 columns">
+		        	<div class="medium-9 large-9 columns">
 		        		<p>{{description}}</p>
-		        		<div class="inline season_ep"> Season & Episode:
+		        		<div class="inline season_ep"> <strong>Season & Episode:</strong>
 		        			<div class="inline" id="sea_ep_nums">{{season}}.{{episode}}</div>
 		        			<div class="inline" id="update_fields">
 		        				<input id ='update_season' class="input_field" value='{{season}}'>.
@@ -129,13 +129,14 @@
 		        			</div>
 		        		</div><br>
 		        		
-		        		<button class='delete-button' data-id="{{_id}}">DELETE</button>
+		        		
 		        		<select class="move_list" data-id="{{_id}}">
 		                    <option class="option" value="watching">Currently Watching</option>
 		                    <option class="option" value="bailed">Bailed</option>
 		                    <option class="option" value="finished">Finished</option>
 		                    <option class="option" value="want">Want To Watch</option>
-		                </select>
+		                </select><br>
+		                <button class='delete-button' data-id="{{_id}}">DELETE</button>
 	            	</div>
             	</div>
         	</div>

@@ -294,10 +294,6 @@ var renderShows = function(data){
             var moveToList = $(this).val();
             var showId = $(this).attr('data-id');
 
-            // console.log(showId)
-            // console.log(moveToList)
-            // console.log(origList)
-
             moveList(showId, moveToList, origList);
         })
         
@@ -439,37 +435,40 @@ var searchNewShow = function(){
         method: 'GET',
         dataType: 'JSON'
     }).done(function(data){
-        showDescrip = data;
 
-        $.ajax({
-            url: '/tvsearch/image/' + t,
-            method: 'GET',
-            dataType: 'JSON'
-        }).done(function(data){
-            
-            showImg = "http://image.tmdb.org/t/p/w500/"+data.results[0].poster_path;
-            
-            var newShowData = {
-               show_name: showDescrip.Title,
-               img_URL: showImg,
-               description: showDescrip.Plot,
-               season: 1,
-               episode: 1,
-               list: list
-            }
+        if(data.Response == 'False'){
+            console.log("ERROR")
+        }else{
+            showDescrip = data;
 
             $.ajax({
-                url: '/users/' +  Cookies.get('tvTrackerUser') + '/shows',
-                method: 'POST',
-                data: newShowData
+                url: '/tvsearch/image/' + t,
+                method: 'GET',
+                dataType: 'JSON'
             }).done(function(data){
-                console.log(data)
-                $('#show-display-container').empty();
-                displayShows(data, list);
-            });
+                
+                showImg = "http://image.tmdb.org/t/p/w500/"+data.results[0].poster_path;
+                
+                var newShowData = {
+                   show_name: showDescrip.Title,
+                   img_URL: showImg,
+                   description: showDescrip.Plot,
+                   season: 1,
+                   episode: 1,
+                   list: list
+                }
 
+                $.ajax({
+                    url: '/users/' +  Cookies.get('tvTrackerUser') + '/shows',
+                    method: 'POST',
+                    data: newShowData
+                }).done(function(data){
+                    console.log(data)
+                    $('#show-display-container').empty();
+                    displayShows(data, list);
+                });
         })
-        
+      }  
     })
 }
 
