@@ -1,9 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Oxygen:400,700);
 
+
+#site { overflow-x: hidden; }
 body{
 
 	font-family: "Oxygen";
-	background-color: #EAFDF8
+	background-color: #016C91
+
 	
 }
 
@@ -14,7 +17,7 @@ body{
 #show-info{
 	margin-top: 20px;
 	border-style: solid;
-	background-color: #BEBCD3;
+	background-color: #E9E9ED;
 	margin-left: 5px;	
 	border-radius: 25px;
 	padding: 10px;
@@ -39,8 +42,24 @@ img{
 }
 
 #landing{
-	background-color: #5D5E60;
-	color: #6A9B9B;
+background-color: #5D5E60;
+color: #6A9B9B;
+margin: 0;
+margin-bottom: 20px;
+border: 0;
+padding:0;
+width:100%;
+display: block
+
+}
+
+#header{
+	padding: 5px;
+}
+
+#logo{
+	margin-bottom: 10px;
+	font-size: 38
 }
 
 .delete-button{

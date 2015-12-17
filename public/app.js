@@ -17,7 +17,7 @@ var startApp = function(data) {
         console.log("logged in user cookie present");
         $('.form').empty();
         $('#header').empty();
-        $('#header').append("<a href='#' id='signout' class='medium-2 large-2 columns inline'>Sign Out</a>");
+        $('#header').append("<a href='#' id='signout' class=' inline'>Sign Out</a>");
         invokeSignOut();
 
         $.ajax({
@@ -33,7 +33,7 @@ var startApp = function(data) {
 
         console.log("no logged in user cookie");
 
-        $('#header').append("<a href='#' id = 'signin'>Sign In</a>");
+        $('#header').append("<a href='#' id = 'signin'>Sign In</a><br>");
         $('#header').append("<a href='#' id = 'signup'>Create Account</a>");
 
         $('body').css("background", "url('static_gif.gif')");
@@ -60,13 +60,13 @@ var invokeSignInForm = function() {
 var showSignInForm = function() {
 
     // Empty the container before appending anything.
-    $('#container').empty();
+    $('#show-display-container').empty();
     $('#signin').hide();
     $('#signup').show();
 
     var $template = Handlebars.compile($('#log-in-screen').html());
 
-    $('#container').append($template);
+    $('#show-display-container').append($template);
 
     signInUser();
 
@@ -125,13 +125,13 @@ var invokeSignUpForm = function() {
 var showSignUpForm = function() {
 
     // Empty the container before appending anything.
-    $('#container').empty();
+    $('#show-display-container').empty();
     $('#signup').hide();
     $('#signin').show();
 
     var $template = Handlebars.compile($('#sign-up-screen').html());
 
-    $('#container').append($template);
+    $('#show-display-container').append($template);
 
     signUpUser();
 
