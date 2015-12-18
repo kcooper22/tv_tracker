@@ -5,9 +5,34 @@
 body{
 
 	font-family: "Oxygen";
-	background-color: #016C91
+	background-color: #999;
+	color: #333;
 
 	
+}
+
+#new-order {
+	color: #fff;
+}
+
+button {
+	background-color: #016C91;
+	color: #fff;
+	padding: 15px;
+	transition: all .3s ease;
+}
+
+button:hover {
+	background-color: #00AABC;
+}
+
+.delete-button:hover {
+	background-color: #BF1526;
+	color: #fff;
+}
+
+a:hover {
+	opacity: .75;
 }
 
 #show-container{
@@ -16,10 +41,10 @@ body{
 
 #show-info{
 	margin-top: 20px;
-	border-style: solid;
-	background-color: #E9E9ED;
+	border: 1px solid #333;
+	background-color: #f6f6f6;
 	margin-left: 5px;	
-	border-radius: 25px;
+	border-radius: 5px;
 	padding: 10px;
 }
 
@@ -42,35 +67,36 @@ img{
 }
 
 #landing{
-background-color: #5D5E60;
-color: #6A9B9B;
-margin: 0;
-margin-bottom: 20px;
-border: 0;
-padding:0;
-width:100%;
-display: block;
-max-width: 100rem;
+	background-color: #016C91;
+	margin: 0;
+	border: 0;
+	padding:0;
+	display: block;
+	max-width: 100rem;
 
 }
 
 #header{
-	padding: 5px;
+	padding: 15px;
 }
 
 #logo{
-	margin-bottom: 10px;
-	font-size: 38
+	margin: 10px 0;
+	font-size: 1.5em;
+	color: #fff;
 }
 
+#signout, #signup, #signin {
+	margin: 10px 0;
+	font-size: .75em;
+	color: #fff;
+	transition: all .3s ease;
+}
+ 
 .delete-button{
 	animation: background-color 0.5s ease;
 }
 
-.delete-button:hover{
-
-	color:red;
-}
 
 #show-title{
 	padding-left: 20px
